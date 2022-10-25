@@ -1,0 +1,6 @@
+
+
+Based on the qoi spec and reference implementation here:
+https://github.com/phoboslab/qoihttps://github.com/phoboslab/qoi
+
+Python implementation of QOI built with Numpy and Numba. 

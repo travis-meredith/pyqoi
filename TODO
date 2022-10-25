@@ -1,0 +1,3 @@
+Reimplement progressive encoder / decoder
+Return image information for decode
+Redesign pure Python implementation excluding numpy / numba
