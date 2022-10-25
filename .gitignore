@@ -1,3 +1,4 @@
 qoi_benchmark_suite/
 images/
 __pycache__
+*.code-workspace
