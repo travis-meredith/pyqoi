@@ -1,6 +1,8 @@
-__all__ = ["encode", "decode"]
+__all__ = ["encode", "decode", "QOIInfo"]
 
+from dataclasses import dataclass
 import struct
+from turtle import color
 
 import numba  # type: ignore
 import numpy as np
@@ -24,6 +26,14 @@ QOI_OP_RGB: int = 0b11111110
 QOI_OP_RGBA: int = 0b11111111
 
 END_STREAM_PILL = [int(c) for c in [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01]]
+
+@dataclass
+class QOIData:
+    data: np.ndarray
+    width: int
+    height: int
+    colorspace: int
+    channels: int
 
 @numba.njit
 def _encode_chunk(
@@ -240,7 +250,7 @@ def _decode_chunk(
 
 def decode(
         data
-        ) -> np.ndarray:
+        ) -> QOIData:
 
     header = bytes(data[4:14:])
     width, height, channels, colorspace = _header_format_struct.unpack(header)
@@ -256,7 +266,7 @@ def decode(
         data, qoi_index, read_index, len(data), old_rgba, write_index, decoded
     )
 
-    return decoded[:write_index:]
+    return QOIData(decoded[:write_index:], width, height, colorspace, channels)
 
 def encode(
         data, 

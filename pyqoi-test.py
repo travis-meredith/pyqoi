@@ -18,7 +18,7 @@ def test_png_progressive(route: str) -> tuple[str, bool | None]:
         width, height, rgba_rows_flat_channels, info = p.asRGBA()
         image = np.array(list(itertools.chain.from_iterable(rgba_rows_flat_channels)), np.uint8)
         encoded = pyqoi.encode(image, width, height, colorspace=0)
-        decoded = pyqoi.decode(encoded)
+        decoded = pyqoi.decode(encoded).data
         return (route, all((a == b for a, b in zip(decoded, image))))
     except Exception:
         return (route, None)
@@ -38,7 +38,7 @@ def manufactured_test():
     image = np.array([channel for pixel in raw_image for channel in pixel], dtype=np.uint8)
 
     encoded = pyqoi.encode(image, width=12, height=16, colorspace=0)
-    decoded = pyqoi.decode(encoded)
+    decoded = pyqoi.decode(encoded).data
     assert all(a == b for a, b in zip(image, decoded)), "did not pass manufactured test"
 
 def get_pngs(root: str) -> Generator[str, None, None]:
