@@ -2,7 +2,6 @@ __all__ = ["encode", "decode", "QOIInfo"]
 
 from dataclasses import dataclass
 import struct
-from turtle import color
 
 import numba  # type: ignore
 import numpy as np

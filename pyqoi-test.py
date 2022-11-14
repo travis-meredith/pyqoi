@@ -3,7 +3,6 @@ import itertools
 import multiprocessing
 import os
 import random
-import time
 from typing import Generator
 
 import numpy as np
